@@ -1,5 +1,5 @@
 // Datos del portafolio
-var portfolioData = {
+const portfolioData = {
     name: "Alex",
     title: "Frontend Engineer",
     heroDescription: "I'm a product designer and front-end web developer. I'm passionate about creating meaningful experiences through design and technology.",
@@ -37,65 +37,60 @@ var portfolioData = {
     }
 };
 
-// Función para manejar el envío del formulario de contacto
-function handleContactFormSubmit(event) {
-    event.preventDefault();
-    const emailInput = document.querySelector('input[placeholder="Email address"]');
-    const email = emailInput.value;
-    if (email) {
-        console.log(`Formulario enviado con email: ${email}`);
-        // Aquí podrías agregar código para enviar el email a un servidor
-        alert('Thanks for your interest! We will get in touch soon.');
-        emailInput.value = '';
-    } else {
-        alert('Please enter a valid email address.');
+// Función para cambiar el GIF de fondo
+function changeBackgroundGif() {
+    const gifContainer = document.querySelector('.gif-container');
+    const gifs = Array.from(gifContainer.children);
+    
+    const currentGif = gifs.find(gif => gif.style.opacity !== '0');
+    let nextGif;
+
+    do {
+        nextGif = gifs[Math.floor(Math.random() * gifs.length)];
+    } while (nextGif === currentGif && gifs.length > 1);
+
+    if (currentGif) {
+        currentGif.style.opacity = '0';
     }
+
+    setTimeout(() => {
+        nextGif.style.opacity = '1';
+    }, 1000); // Esperar 1 segundo para que el GIF anterior se desvanezca
+
+    // Programar el próximo cambio de GIF
+    setTimeout(changeBackgroundGif, 9000); // Cambiar cada 9 segundos (8 segundos de visualización + 1 segundo de fundido)
 }
 
-// Función para agregar interactividad a los botones de la barra de navegación
-function setupNavigation() {
-    const navButtons = document.querySelectorAll('header button');
-    navButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            console.log(`Clicked: ${button.getAttribute('aria-label')}`);
-            // Aquí podrías agregar funcionalidad específica para cada botón
-        });
+// Función para inicializar los GIFs de fondo
+function initBackgroundGifs() {
+    const gifContainer = document.querySelector('.gif-container');
+    const gifs = Array.from(gifContainer.children);
+
+    // Configurar estilos para los contenedores de GIFs de GIPHY
+    gifs.forEach(gif => {
+        gif.style.opacity = '0';
     });
+
+    // Iniciar con un GIF aleatorio
+    const randomGif = gifs[Math.floor(Math.random() * gifs.length)];
+    randomGif.style.opacity = '1';
+
+    // Iniciar el cambio de GIFs
+    setTimeout(changeBackgroundGif, 8000);
 }
 
 // Función para configurar el reproductor de música
 function setupMusicPlayer() {
-    const audio = document.getElementById('background-music');
     const playPauseButton = document.getElementById('play-pause');
     const volumeControl = document.getElementById('volume-control');
     const closeButton = document.getElementById('close-player');
     const musicPlayer = document.getElementById('music-player');
-
+    
+    // Crear elemento de audio
+    const audio = new Audio('https://plaza.one/mp3');
     audio.volume = 0.2; // Iniciar al 20% del volumen
 
-    function attemptPlay() {
-        audio.play().then(() => {
-            playPauseButton.textContent = 'Pause';
-            console.log('Reproducción automática exitosa');
-        }).catch(error => {
-            console.log('Reproducción automática fallida:', error);
-            playPauseButton.textContent = 'Play';
-        });
-    }
-
-    // Intenta reproducir inmediatamente
-    attemptPlay();
-
-    // También intenta reproducir cuando la ventana obtiene el foco
-    window.addEventListener('focus', attemptPlay);
-
-    // Intenta reproducir en el primer clic en cualquier parte de la página
-    document.addEventListener('click', function onFirstClick() {
-        attemptPlay();
-        document.removeEventListener('click', onFirstClick);
-    }, { once: true });
-
-    playPauseButton.addEventListener('click', () => {
+    function togglePlayPause() {
         if (audio.paused) {
             audio.play();
             playPauseButton.textContent = 'Pause';
@@ -103,7 +98,9 @@ function setupMusicPlayer() {
             audio.pause();
             playPauseButton.textContent = 'Play';
         }
-    });
+    }
+
+    playPauseButton.addEventListener('click', togglePlayPause);
 
     volumeControl.addEventListener('input', (e) => {
         audio.volume = e.target.value / 100;
@@ -115,18 +112,27 @@ function setupMusicPlayer() {
     });
 }
 
+// Función para configurar la navegación suave
+function setupSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+}
+
 // Función para inicializar el portafolio
 function initPortfolio() {
     console.log("Initializing portfolio...");
 
-    // Configurar el formulario de contacto
-    const contactForm = document.querySelector('label.flex.flex-col');
-    if (contactForm) {
-        contactForm.addEventListener('submit', handleContactFormSubmit);
-    }
+    // Inicializar los GIFs de fondo
+    initBackgroundGifs();
 
-    // Configurar la navegación
-    setupNavigation();
+    // Configurar la navegación suave
+    setupSmoothScrolling();
 
     // Inicializar el reproductor de música
     setupMusicPlayer();
@@ -136,12 +142,3 @@ function initPortfolio() {
 
 // Ejecutar la inicialización cuando el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', initPortfolio);
-
-// Función de utilidad para actualizar el contenido dinámicamente (por si lo necesitas en el futuro)
-function updateContent(elementId, content) {
-    const element = document.getElementById(elementId);
-    if (element) {
-        element.textContent = content;
-    }
-}
-
