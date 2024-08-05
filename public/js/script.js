@@ -1,5 +1,5 @@
 // Datos del portafolio
-const portfolioData = {
+var portfolioData = {
     name: "Alex",
     title: "Frontend Engineer",
     heroDescription: "I'm a product designer and front-end web developer. I'm passionate about creating meaningful experiences through design and technology.",
@@ -73,13 +73,27 @@ function setupMusicPlayer() {
 
     audio.volume = 0.2; // Iniciar al 20% del volumen
 
-    // Intenta reproducir automáticamente
-    audio.play().then(() => {
-        playPauseButton.textContent = 'Pause';
-    }).catch(error => {
-        console.log('Autoplay prevented:', error);
-        playPauseButton.textContent = 'Play';
-    });
+    function attemptPlay() {
+        audio.play().then(() => {
+            playPauseButton.textContent = 'Pause';
+            console.log('Reproducción automática exitosa');
+        }).catch(error => {
+            console.log('Reproducción automática fallida:', error);
+            playPauseButton.textContent = 'Play';
+        });
+    }
+
+    // Intenta reproducir inmediatamente
+    attemptPlay();
+
+    // También intenta reproducir cuando la ventana obtiene el foco
+    window.addEventListener('focus', attemptPlay);
+
+    // Intenta reproducir en el primer clic en cualquier parte de la página
+    document.addEventListener('click', function onFirstClick() {
+        attemptPlay();
+        document.removeEventListener('click', onFirstClick);
+    }, { once: true });
 
     playPauseButton.addEventListener('click', () => {
         if (audio.paused) {
@@ -131,6 +145,3 @@ function updateContent(elementId, content) {
     }
 }
 
-// Ejemplo de cómo podrías usar la función updateContent:
-// updateContent('hero-title', portfolioData.name);
-// updateContent('hero-description', portfolioData.heroDescription);
