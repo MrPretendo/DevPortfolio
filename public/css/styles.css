@@ -65,7 +65,7 @@ body {
 }
 
 .gif-item p {
-    display: none; /* Oculta el enlace "via GIPHY" */
+    display: none; /* Para ocultar el enlace "via GIPHY" */
 }
 
 .background-container::after {
@@ -150,7 +150,7 @@ nav {
     margin: 40px 0 20px;
 }
 
-/* Experience section styles */
+/* Experiencia */
 .experience-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -198,7 +198,7 @@ nav {
     font-size: 0.9rem;
 }
 
-/* Skills section styles */
+/* Skills  */
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -248,19 +248,19 @@ nav {
     color: var(--secondary-text);
 }
 
-/* Contact section styles */
+/* Contact section */
 .contact-icons {
     display: flex;
     justify-content: space-around;
     margin-top: 20px;
 }
 
-.contact-icons a img {
+.contact-icons a img { /* Revisar por qué hosteado no ajusta a este tamaño */
     width: 128px;
     height: 128px;
 }
 
-/* Footer styles */
+/* Footer */
 footer {
     background-color: #000;
     color: var(--primary-text);
@@ -275,7 +275,7 @@ footer {
     margin-right: -50vw;
 }
 
-/* Music player styles */
+/* Music player */
 .music-player {
     position: fixed;
     bottom: 20px;
@@ -336,7 +336,7 @@ footer {
     width: 100%;
 }
 
-/* Media queries for responsiveness */
+/* Media queries */
 @media (max-width: 1200px) {
     .skills-grid {
         grid-template-columns: repeat(4, 1fr);

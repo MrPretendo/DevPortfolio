@@ -94,7 +94,7 @@ function initPortfolio() {
     // Inicializar el reproductor de música
     setupMusicPlayer();
 
-    // Configurar redirección de blog
+    // Configurar redirección de blog //MEJOR AÑADIRLO DIRECTAMENTE A HTML, más fácil xd
     document.getElementById('blog-link').addEventListener('click', function() {
         window.location.href = 'https://graphic-portfolio-mrpretendo.web.app/index.html';
     });
