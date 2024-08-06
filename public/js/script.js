@@ -1,82 +1,39 @@
-// Datos del portafolio
-const portfolioData = {
-    name: "Alex",
-    title: "Frontend Engineer",
-    heroDescription: "I'm a product designer and front-end web developer. I'm passionate about creating meaningful experiences through design and technology.",
-    experience: [
-        {
-            company: "Figma",
-            position: "Frontend Engineer",
-            period: "April 2019 - Present",
-            location: "San Francisco, CA"
-        },
-        {
-            company: "Slack",
-            position: "Frontend Engineer",
-            period: "July 2017 - March 2019",
-            location: "San Francisco, CA"
-        },
-        {
-            company: "Quip",
-            position: "Frontend Engineer",
-            period: "July 2015 - June 2017",
-            location: "San Francisco, CA"
-        }
-    ],
-    skills: [
-        { name: "Javascript", experience: "5 years experience" },
-        { name: "Typescript", experience: "5 years experience" },
-        { name: "React", experience: "5 years experience" },
-        { name: "Node.js", experience: "3 years experience" }
-    ],
-    contact: {
-        location: "San Francisco, CA",
-        email: "johndoe@gmail.com",
-        linkedin: "linkedin.com/johndoe",
-        github: "github.com/johndoe"
-    }
-};
-
 // Función para cambiar el GIF de fondo
 function changeBackgroundGif() {
-    const gifContainer = document.querySelector('.gif-container');
-    const gifs = Array.from(gifContainer.children);
-    
-    const currentGif = gifs.find(gif => gif.style.opacity !== '0');
+    const gifItems = document.querySelectorAll('.gif-item');
+    const currentGif = document.querySelector('.gif-item.active');
     let nextGif;
 
     do {
-        nextGif = gifs[Math.floor(Math.random() * gifs.length)];
-    } while (nextGif === currentGif && gifs.length > 1);
+        nextGif = gifItems[Math.floor(Math.random() * gifItems.length)];
+    } while (nextGif === currentGif && gifItems.length > 1);
 
     if (currentGif) {
-        currentGif.style.opacity = '0';
+        currentGif.classList.remove('active');
     }
 
-    setTimeout(() => {
-        nextGif.style.opacity = '1';
-    }, 1000); // Esperar 1 segundo para que el GIF anterior se desvanezca
+    nextGif.classList.add('active');
 
     // Programar el próximo cambio de GIF
-    setTimeout(changeBackgroundGif, 9000); // Cambiar cada 9 segundos (8 segundos de visualización + 1 segundo de fundido)
+    setTimeout(changeBackgroundGif, 8000); // Cambiar cada 8 segundos
 }
 
 // Función para inicializar los GIFs de fondo
 function initBackgroundGifs() {
-    const gifContainer = document.querySelector('.gif-container');
-    const gifs = Array.from(gifContainer.children);
+    const gifItems = document.querySelectorAll('.gif-item');
+    if (gifItems.length > 0) {
+        // Asegurarse de que solo un GIF esté activo inicialmente
+        gifItems.forEach((item, index) => {
+            if (index === 0) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
 
-    // Configurar estilos para los contenedores de GIFs de GIPHY
-    gifs.forEach(gif => {
-        gif.style.opacity = '0';
-    });
-
-    // Iniciar con un GIF aleatorio
-    const randomGif = gifs[Math.floor(Math.random() * gifs.length)];
-    randomGif.style.opacity = '1';
-
-    // Iniciar el cambio de GIFs
-    setTimeout(changeBackgroundGif, 8000);
+        // Iniciar el cambio de GIFs
+        setTimeout(changeBackgroundGif, 8000);
+    }
 }
 
 // Función para configurar el reproductor de música
@@ -136,6 +93,11 @@ function initPortfolio() {
 
     // Inicializar el reproductor de música
     setupMusicPlayer();
+
+    // Configurar redirección de blog
+    document.getElementById('blog-link').addEventListener('click', function() {
+        window.location.href = 'https://graphic-portfolio-mrpretendo.web.app/index.html';
+    });
 
     console.log("Portfolio initialized successfully.");
 }
