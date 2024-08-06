@@ -47,6 +47,14 @@ function setupMusicPlayer() {
     const audio = new Audio('https://plaza.one/mp3');
     audio.volume = 0.2; // Iniciar al 20% del volumen
 
+    // Reproducción automática de música
+    audio.play().then(() => {
+        playPauseButton.textContent = 'Pause';
+    }).catch(error => {
+        console.log('Autoplay failed:', error);
+        playPauseButton.textContent = 'Play';
+    });
+
     function togglePlayPause() {
         if (audio.paused) {
             audio.play();
@@ -94,7 +102,7 @@ function initPortfolio() {
     // Inicializar el reproductor de música
     setupMusicPlayer();
 
-    // Configurar redirección de blog //MEJOR AÑADIRLO DIRECTAMENTE A HTML, más fácil xd
+    // Configurar redirección de blog
     document.getElementById('blog-link').addEventListener('click', function() {
         window.location.href = 'https://graphic-portfolio-mrpretendo.web.app/index.html';
     });
