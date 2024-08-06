@@ -65,7 +65,7 @@ body {
 }
 
 .gif-item p {
-    display: none; /* Para ocultar el enlace "via GIPHY" */
+    display: none; /* Oculta el enlace "via GIPHY" */
 }
 
 .background-container::after {
@@ -118,8 +118,8 @@ nav {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     padding: 40px 0;
+    align-items: center;
 }
 
 .hero-content {
@@ -128,7 +128,6 @@ nav {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    align-items: center;
 }
 
 .hero-title {
@@ -150,7 +149,7 @@ nav {
     margin: 40px 0 20px;
 }
 
-/* Experiencia */
+/* Experience section styles */
 .experience-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -198,7 +197,7 @@ nav {
     font-size: 0.9rem;
 }
 
-/* Skills  */
+/* Skills section styles */
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -248,19 +247,19 @@ nav {
     color: var(--secondary-text);
 }
 
-/* Contact section */
+/* Contact section styles */
 .contact-icons {
     display: flex;
     justify-content: space-around;
     margin-top: 20px;
 }
 
-.contact-icons a img { /* Revisar por qué hosteado no ajusta a este tamaño */
+.contact-icons a img {
     width: 128px;
     height: 128px;
 }
 
-/* Footer */
+/* Footer styles */
 footer {
     background-color: #000;
     color: var(--primary-text);
@@ -275,7 +274,7 @@ footer {
     margin-right: -50vw;
 }
 
-/* Music player */
+/* Music player styles */
 .music-player {
     position: fixed;
     bottom: 20px;
@@ -403,5 +402,29 @@ footer {
 
     .section-title {
         font-size: 1.5rem;
+    }
+
+    .music-player {
+        width: 100%;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        border-radius: 0;
+    }
+
+    .title-bar {
+        padding: 6px;
+    }
+
+    .player-content {
+        padding: 5px;
+    }
+
+    #play-pause {
+        padding: 10px;
+    }
+
+    #volume-control {
+        margin-top: 5px;
     }
 }
